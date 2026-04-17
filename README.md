@@ -10,6 +10,7 @@
 ## Hasil Pengerjaan (Live Demo)
 Silakan klik link di bawah ini untuk melihat hasil website yang sudah di-hosting:
 
-👉 **[Link Website Laravel Cloud](https://amikomeventhub-3288-main-th6g79.free.laravel.cloud/profil)**
+ [Link Website Laravel Cloud](https://amikomeventhub-3288-main-th6g79.free.laravel.cloud/profil
+
 
 ---
