@@ -2,8 +2,8 @@
 
 **Identitas Mahasiswa:**
 * **Nama:** Hafizh Carnel Setyanto
-* **NIM:** 24.12.3288
-* **Jurusan:** Sistem Informasi
+* **NIM:** 24.12.3288 
+* **Jurusan:** Sistem Informasi (SI04)
 
 ---
 
