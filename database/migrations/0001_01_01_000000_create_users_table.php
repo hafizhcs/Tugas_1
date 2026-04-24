@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('role')->default('user'); // Kolom role diletakkan di sini
+            $table->rememberToken(); // Hanya boleh ada satu
+            $table->timestamps();    // Hanya boleh ada satu
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
