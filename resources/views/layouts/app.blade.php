@@ -23,21 +23,21 @@
 <body class="bg-slate-50 text-slate-900">
 
     <!-- ===== NAVBAR ===== -->
-    <nav class="glass sticky top-8 z-40 mx-4 mt-4 px-6 py-4 rounded-2xl border border-white/20 shadow-lg flex justify-between items-center">
+    <nav class="glass sticky top-0 z-40 px-6 py-4 border-b border-white/20 shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-2">
             <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
                 AH
             </div>
-            <span class="text-xl font-bold tracking-tight">AmikomEventHub</span>
+            <a href="{{ route('home') }}" class="text-xl font-bold tracking-tight">AmikomEventHub</a>
         </div>
         <div class="hidden md:flex gap-8 font-medium">
-            <a href="{{ route('home') }}" class="hover:text-indigo-600 transition">Jelajahi</a>
-            <a href="{{ route('katalog') }}" class="hover:text-indigo-600 transition">Katalog</a>
-            <a href="{{ route('bantuan') }}" class="hover:text-indigo-600 transition">Bantuan</a>
-            <a href="{{ route('kontak') }}" class="hover:text-indigo-600 transition">Kontak</a>
+            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'text-indigo-600' : 'hover:text-indigo-600' }} transition">Jelajahi</a>
+            <a href="{{ route('katalog') }}" class="{{ request()->routeIs('katalog') ? 'text-indigo-600' : 'hover:text-indigo-600' }} transition">Katalog</a>
+            <a href="{{ route('bantuan') }}" class="{{ request()->routeIs('bantuan') ? 'text-indigo-600' : 'hover:text-indigo-600' }} transition">Bantuan</a>
+            <a href="{{ route('kontak') }}" class="{{ request()->routeIs('kontak') ? 'text-indigo-600' : 'hover:text-indigo-600' }} transition">Kontak</a>
         </div>
         <div class="flex gap-3">
-            <a href="{{ route('profil') }}" class="px-5 py-2.5 rounded-xl font-semibold hover:bg-slate-200 transition">
+            <a href="{{ route('profil') }}" class="px-5 py-2.5 rounded-xl font-semibold hover:bg-slate-100 transition">
                 Profil
             </a>
             <a href="{{ route('admin.dashboard') }}" class="px-5 py-2.5 bg-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition">
@@ -69,19 +69,20 @@
                     <li><a href="{{ route('home') }}" class="hover:text-white transition">Home</a></li>
                     <li><a href="{{ route('katalog') }}" class="hover:text-white transition">Katalog Event</a></li>
                     <li><a href="{{ route('bantuan') }}" class="hover:text-white transition">Bantuan</a></li>
+                    <li><a href="{{ route('kontak') }}" class="hover:text-white transition">Kontak</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6">Hubungi Kami</h4>
                 <ul class="space-y-4">
-                    <li><a href="{{ route('kontak') }}" class="hover:text-white transition">Halaman Kontak</a></li>
                     <li>support@amikomeventhub.com</li>
                     <li>+62 812 3456 7890</li>
+                    <li>Universitas AMIKOM Yogyakarta</li>
                 </ul>
             </div>
         </div>
         <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-indigo-800 text-center text-indigo-400 text-sm">
-            &copy; 2024 AmikomEventHub. Built with Laravel & Tailwind CSS.
+            &copy; 2026 AmikomEventHub. Built with Laravel & Tailwind CSS.
         </div>
     </footer>
 

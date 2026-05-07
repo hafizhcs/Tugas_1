@@ -3,27 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
 
 class EventController extends Controller
 {
     /**
-     * Menampilkan halaman detail event
+     * Halaman detail event
      */
-    public function show()
+    public function show($id)
     {
-        return view('event-detail');
+        $event = Event::with('category')->findOrFail($id);
+        return view('event-detail', compact('event'));
     }
 
     /**
-     * Menampilkan halaman checkout
+     * Halaman checkout (DIPERBAIKI)
      */
-    public function checkout()
+    public function checkout($id) // 1. Tambahkan parameter $id
     {
-        return view('checkout');
+        // 2. Ambil data event berdasarkan ID
+        $event = Event::findOrFail($id);
+
+        // 3. Kirim variabel $event ke view checkout
+        return view('checkout', compact('event'));
     }
 
     /**
-     * Menampilkan halaman e-ticket setelah pembayaran
+     * Halaman e-ticket setelah bayar
      */
     public function ticket()
     {

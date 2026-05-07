@@ -3,44 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
     /**
-     * Menampilkan halaman utama (beranda)
+     * Halaman beranda dengan filter kategori
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('welcome');
+        // 1. Ambil semua kategori untuk tombol filter
+        $categories = Category::all();
+
+        // 2. Buat base query dengan Eager Loading
+        $query = Event::with('category')
+            ->where('date', '>=', now())
+            ->orderBy('date', 'asc');
+
+        // 3. Jika ada parameter ?category= di URL, filter berdasarkan slug
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        }
+
+        // 4. Eksekusi query
+        $events = $query->get();
+
+        // Simpan kategori yang sedang aktif untuk highlight tombol
+        $activeCategory = $request->category ?? '';
+
+        return view('welcome', compact('events', 'categories', 'activeCategory'));
     }
 
-    /**
-     * Menampilkan halaman profil praktikan
-     */
     public function profil()
     {
         return view('profil');
     }
 
-    /**
-     * Menampilkan halaman katalog event
-     */
     public function katalog()
     {
         return view('katalog');
     }
 
-    /**
-     * Menampilkan halaman bantuan / FAQ
-     */
     public function bantuan()
     {
         return view('bantuan');
     }
 
-    /**
-     * Menampilkan halaman kontak
-     */
     public function kontak()
     {
         return view('contact');
