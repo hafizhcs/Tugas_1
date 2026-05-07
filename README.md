@@ -27,7 +27,7 @@
  6. halaman checkout: https://amikomeventhub-3288-main-th6g79.free.laravel.cloud/checkout
 
 tugas 3
-1. halaman tambah event baru:
-2. halaman edit event:
+1. halaman tambah event baru: https://amikomeventhub-3288-main-th6g79.free.laravel.cloud/admin/events/1/edit 
+2. halaman edit event: https://amikomeventhub-3288-main-th6g79.free.laravel.cloud/admin/events/1/edit
 
 ---
