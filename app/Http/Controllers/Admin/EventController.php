@@ -11,13 +11,24 @@ use Illuminate\Support\Facades\Storage;
 class EventController extends Controller
 {
     /**
-     * READ - Menampilkan daftar semua event
+     * READ - Menampilkan daftar semua event + pencarian
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Eager loading 'category' untuk hindari N+1 Query Problem
-        // paginate(10) artinya tampil 10 data per halaman
-        $events = Event::with('category')->latest()->paginate(10);
+        $search = $request->input('search');
+
+        $events = Event::with('category')
+            ->when($search, function ($query, $search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('name', 'LIKE', "%{$search}%");
+                      });
+            })
+            ->latest()
+            ->paginate(10);
+
+        // agar pagination tetap membawa parameter search
+        $events->appends(['search' => $search]);
 
         return view('admin.events.index', compact('events'));
     }
@@ -37,7 +48,6 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input dari form
         $data = $request->validate([
             'category_id'  => 'required|exists:categories,id',
             'title'        => 'required|string|max:255',
@@ -49,12 +59,10 @@ class EventController extends Controller
             'poster'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        // Handle upload poster jika ada
         if ($request->hasFile('poster')) {
             $data['poster_path'] = $request->file('poster')->store('posters', 'public');
         }
 
-        // Hapus key 'poster' dari $data karena kolom DB-nya adalah 'poster_path'
         unset($data['poster']);
 
         Event::create($data);
@@ -89,9 +97,7 @@ class EventController extends Controller
             'poster'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        // Handle upload poster baru jika ada
         if ($request->hasFile('poster')) {
-            // Hapus poster lama jika ada
             if ($event->poster_path) {
                 Storage::disk('public')->delete($event->poster_path);
             }
@@ -113,7 +119,6 @@ class EventController extends Controller
     {
         $title = $event->title;
 
-        // Hapus poster dari storage jika ada
         if ($event->poster_path) {
             Storage::disk('public')->delete($event->poster_path);
         }

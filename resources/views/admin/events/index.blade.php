@@ -6,7 +6,19 @@
 
 @section('content')
 
-<div class="mb-6 flex justify-end">
+<div class="mb-6 flex justify-between items-center">
+    {{-- Form Pencarian --}}
+    <form action="{{ route('admin.events.index') }}" method="GET" class="flex items-center gap-2">
+        <input type="text" name="search" value="{{ request('search') }}"
+               placeholder="Cari event..." 
+               class="px-4 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+        <button type="submit" 
+                class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition">
+            Cari
+        </button>
+    </form>
+
+    {{-- Tombol Tambah Event --}}
     <a href="{{ route('admin.events.create') }}"
         class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition">
         + Tambah Event Baru
@@ -15,6 +27,7 @@
 
 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
+        
         <table class="w-full text-left border-collapse">
             <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest">
                 <tr>
@@ -56,7 +69,6 @@
                     </td>
                     <td class="px-8 py-6">
                         <p class="font-medium text-slate-700">
-                            {{-- Perbaikan: Menggunakan Carbon::parse untuk menghindari error string --}}
                             {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}
                         </p>
                         <p class="text-xs text-slate-400 mt-1">{{ \Carbon\Carbon::parse($event->date)->format('H:i') }} WIB</p>
@@ -70,7 +82,6 @@
                     </td>
                     <td class="px-8 py-6">
                         <div class="flex gap-2">
-                            {{-- Tombol Edit --}}
                             <a href="{{ route('admin.events.edit', $event->id) }}"
                                 class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition"
                                 title="Edit Event">
@@ -79,7 +90,6 @@
                                 </svg>
                             </a>
 
-                            {{-- Tombol Delete --}}
                             <form action="{{ route('admin.events.destroy', $event->id) }}"
                                 method="POST"
                                 onsubmit="return confirm('⚠️ Yakin ingin menghapus event \'{{ $event->title }}\'? Tindakan ini tidak bisa dibatalkan!');">
@@ -117,14 +127,10 @@
         </table>
     </div>
 
-    {{-- Pagination --}}
     <div class="px-8 py-6 bg-slate-50/50 border-t flex justify-between items-center">
         <p class="text-sm text-slate-500 font-medium">
             Menampilkan {{ $events->firstItem() ?? 0 }}–{{ $events->lastItem() ?? 0 }}
             dari {{ $events->total() }} event
         </p>
-        {{ $events->links() }}
-    </div>
-</div>
 
-@endsection
+       @endsection

@@ -8,6 +8,25 @@ use App\Models\Event;
 class EventController extends Controller
 {
     /**
+     * Halaman daftar event (index + search)
+     */
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        $events = Event::with('category')
+            ->when($search, function ($query, $search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('name', 'LIKE', "%{$search}%");
+                      });
+            })
+            ->paginate(10);
+
+        return view('admin.events.index', compact('events'));
+    }
+
+    /**
      * Halaman detail event
      */
     public function show($id)
@@ -19,12 +38,9 @@ class EventController extends Controller
     /**
      * Halaman checkout (DIPERBAIKI)
      */
-    public function checkout($id) // 1. Tambahkan parameter $id
+    public function checkout($id)
     {
-        // 2. Ambil data event berdasarkan ID
         $event = Event::findOrFail($id);
-
-        // 3. Kirim variabel $event ke view checkout
         return view('checkout', compact('event'));
     }
 
