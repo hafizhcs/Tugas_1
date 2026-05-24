@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\CategoryController; 
 
 // =============================================
 // USER AREA ROUTES
@@ -29,4 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Route::resource otomatis generate 7 route CRUD untuk events
     Route::resource('events', AdminEventController::class);
+
+    // Route::resource otomatis generate 7 route CRUD untuk categories
+    Route::resource('categories', CategoryController::class);
 });
