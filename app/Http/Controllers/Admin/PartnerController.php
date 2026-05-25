@@ -11,11 +11,20 @@ use Illuminate\Support\Facades\Storage;
 class PartnerController extends Controller
 {
     /**
-     * Tampilkan daftar partner
+     * Tampilkan daftar partner + search
      */
-    public function index()
+    public function index(Request $request)
     {
-        $partners = Partner::with('category')->latest()->paginate(10);
+        $query = Partner::with('category');
+
+        // Jika ada pencarian berdasarkan nama
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
+        $partners = $query->latest()->paginate(10);
+
         return view('admin.partners.index', compact('partners'));
     }
 

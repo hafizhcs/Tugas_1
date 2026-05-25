@@ -5,10 +5,22 @@
 
 @section('content')
 <div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-bold">Daftar Partner</h2>
+    <div class="mb-4">
+    <form action="{{ route('admin.partners.index') }}" method="GET" class="flex gap-2">
+        <input type="text" name="search" value="{{ request('search') }}"
+               placeholder="Cari partner..."
+               class="px-4 py-2 border rounded-lg w-64 focus:ring focus:ring-indigo-300">
+        <button type="submit"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+            Search
+        </button>
+    </form>
+</div>
+
     <a href="{{ route('admin.partners.create') }}"
        class="px-4 py-2 bg-indigo-600 text-white rounded-lg">+ Tambah Partner</a>
 </div>
+
 
 <div class="bg-white rounded-lg shadow overflow-hidden">
     <table class="w-full text-left border-collapse">

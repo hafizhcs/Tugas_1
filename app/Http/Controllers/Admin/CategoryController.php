@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * Tampilkan daftar kategori + search
+     */
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -22,11 +25,17 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
+    /**
+     * Form tambah kategori
+     */
     public function create()
     {
         return view('admin.categories.create');
     }
 
+    /**
+     * Simpan kategori baru
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -39,11 +48,17 @@ class CategoryController extends Controller
             ->with('success', 'Kategori berhasil ditambahkan!');
     }
 
+    /**
+     * Form edit kategori
+     */
     public function edit(Category $category)
     {
         return view('admin.categories.edit', compact('category'));
     }
 
+    /**
+     * Update kategori
+     */
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
@@ -56,6 +71,9 @@ class CategoryController extends Controller
             ->with('success', 'Kategori berhasil diperbarui!');
     }
 
+    /**
+     * Hapus kategori
+     */
     public function destroy(Category $category)
     {
         $category->delete();

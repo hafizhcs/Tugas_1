@@ -5,7 +5,18 @@
 
 @section('content')
 <div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-bold">Daftar Kategori</h2>
+    <div class="mb-4">
+    <form action="{{ route('admin.categories.index') }}" method="GET" class="flex gap-2">
+        <input type="text" name="search" value="{{ request('search') }}"
+               placeholder="Cari kategori..."
+               class="px-4 py-2 border rounded-lg w-64 focus:ring focus:ring-indigo-300">
+        <button type="submit"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+            Search
+        </button>
+    </form>
+</div>
+
     <a href="{{ route('admin.categories.create') }}"
        class="px-4 py-2 bg-indigo-600 text-white rounded-lg">+ Tambah Kategori</a>
 </div>
